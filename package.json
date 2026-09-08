@@ -3,13 +3,16 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "dev": "bun run index.ts"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "concurrently": "^10.0.5"
   },
   "peerDependencies": {
     "typescript": "^7"
   },
-  
   "workspaces": [
     "packages/*"
   ]
