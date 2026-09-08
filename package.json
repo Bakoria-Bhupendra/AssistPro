@@ -5,11 +5,14 @@
   "private": true,
   "scripts": {
     "dev": "bun run index.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/bun": "latest",
     "concurrently": "^10.0.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.0",
     "prettier": "^3.9.6"
   },
   "peerDependencies": {
