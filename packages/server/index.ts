@@ -40,17 +40,23 @@ app.post('/api/chat', async (req: Request, res: Response) => {
       return;
    }
 
-   const { prompt, conversationId } = req.body;
+   try {
+      const { prompt, conversationId } = req.body;
 
-   const response = await client.responses.create({
-      model: 'gpt-5.6-luna',
-      input: prompt,
-      max_output_tokens: 200,
-      previous_response_id: conversations.get(conversationId),
-   });
+      const response = await client.responses.create({
+         model: 'gpt-5.6-luna',
+         input: prompt,
+         max_output_tokens: 200,
+         previous_response_id: conversations.get(conversationId),
+      });
 
-   conversations.set(conversationId, response.id);
-   res.json({ message: response.output_text });
+      conversations.set(conversationId, response.id);
+      res.json({ message: response.output_text });
+   } catch {
+      res.status(500).json({
+         message: 'An error occurred while processing your request.',
+      });
+   }
 });
 
 app.listen(port, () => {
