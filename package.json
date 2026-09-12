@@ -20,5 +20,9 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "react-icon": "^1.0.0",
+    "react-icons": "^5.7.0"
+  }
 }
