@@ -1,12 +1,17 @@
 import axios from 'axios';
-import ReactMarkdown from 'react-markdown';
-import { useEffect, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { FaArrowUp } from 'react-icons/fa';
+import { useRef, useState } from 'react';
 import TypingIndicator from './TypingIndicator';
 import type { message } from './ChatMessages';
 import ChatMessages from './ChatMessages';
 import ChatInput, { type ChatFormData } from './ChatInput';
+import popAudio from '@/assets/sounds/popup.wav';
+import notificationAudio from '@/assets/sounds/notification.wav';
+
+const popSound = new Audio(popAudio);
+popSound.volume = 0.5;
+
+const notificationSound = new Audio(notificationAudio);
+notificationSound.volume = 0.5;
 
 type ChatResponse = {
    message: string;
@@ -24,6 +29,7 @@ const ChatBot = () => {
          setMessages((prev) => [...prev, { content: prompt, role: 'user' }]);
          setIsLoading(true);
          setError('');
+         popSound.play();
          const { data } = await axios.post<ChatResponse>('/api/chat', {
             prompt,
             conversationId: conversationId.current,
@@ -32,6 +38,7 @@ const ChatBot = () => {
             ...prev,
             { content: data.message, role: 'bot' },
          ]);
+         notificationSound.play();
       } catch (error) {
          console.error('Error sending message:', error);
          setError('An error occurred while sending the message.');
